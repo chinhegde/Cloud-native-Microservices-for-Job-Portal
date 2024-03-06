@@ -1,0 +1,152 @@
+{
+    "jobs": [
+      
+      
+      {
+        "job_id": 3,
+        "job_title": "UX/UI Designer",
+        "job_description": "We're looking for a creative UX/UI Designer to join our team. The ideal candidate should have a strong portfolio showcasing user-centered design solutions. Responsibilities include wireframing, prototyping, and collaborating with cross-functional teams. Proficiency in design tools such as Sketch or Figma is required. Join us in creating visually appealing and user-friendly experiences!",
+        "min_salary": 75000,
+        "max_salary": 95000,
+        "job_url": "https://example.com/ux-ui-designer",
+        "job_location": "Seattle, WA",
+        "company_name": "Creative Solutions Ltd.",
+        "company_url": "https://creativesolutions.com",
+        "job_posted_on": "2024-03-02"
+      },
+      {
+        "job_id": 4,
+        "job_title": "DevOps Engineer",
+        "job_description": "Exciting opportunity for a DevOps Engineer! This role involves optimizing and automating our deployment and infrastructure processes. Candidates should have experience with cloud platforms, CI/CD pipelines, and strong scripting skills. Join our dynamic team to enhance the efficiency and reliability of our systems.",
+        "min_salary": 85000,
+        "max_salary": 110000,
+        "job_url": "https://example.com/devops-engineer",
+        "job_location": "Austin, TX",
+        "company_name": "Cloud Innovations Corp.",
+        "company_url": "https://cloudinnovations.com",
+        "job_posted_on": "2024-03-03"
+      },
+      {
+        "job_id": 5,
+        "job_title": "Marketing Specialist",
+        "job_description": "We're hiring a Marketing Specialist to drive our brand awareness and outreach efforts. This role requires a creative thinker with experience in digital marketing, social media, and content creation. Strong communication skills and the ability to analyze marketing metrics are essential. Join our team and contribute to the growth of our brand!",
+        "min_salary": 70000,
+        "max_salary": 90000,
+        "job_url": "https://example.com/marketing-specialist",
+        "job_location": "Chicago, IL",
+        "company_name": "Strategic Marketing Solutions",
+        "company_url": "https://strategicmarketing.com",
+        "job_posted_on": "2024-03-03"
+      },
+      {
+        "job_id": 6,
+        "job_title": "Cybersecurity Analyst",
+        "job_description": "Enhance our security posture as a Cybersecurity Analyst. Responsibilities include monitoring security alerts, conducting vulnerability assessments, and implementing security measures. Candidates should have a strong understanding of cybersecurity principles and experience with tools such as IDS/IPS. Join us in safeguarding our digital assets!",
+        "min_salary": 95000,
+        "max_salary": 120000,
+        "job_url": "https://example.com/cybersecurity-analyst",
+        "job_location": "Washington, D.C.",
+        "company_name": "SecureTech Solutions",
+        "company_url": "https://securetechsolutions.com",
+        "job_posted_on": "2024-03-03"
+      },
+      {
+        "job_id": 7,
+        "job_title": "Product Manager",
+        "job_description": "We're seeking a strategic and results-driven Product Manager to lead the development of innovative products. Responsibilities include market research, product roadmap planning, and collaboration with cross-functional teams. Candidates should have a proven track record in product management and a passion for delivering exceptional products.",
+        "min_salary": 100000,
+        "max_salary": 130000,
+        "job_url": "https://example.com/product-manager",
+        "job_location": "San Jose, CA",
+        "company_name": "InnovateTech Solutions",
+        "company_url": "https://innovatetech.com",
+        "job_posted_on": "2024-03-03"
+      },
+      {
+        "job_id": 8,
+        "job_title": "Financial Analyst",
+        "job_description": "Join our finance team as a Financial Analyst! This role involves analyzing financial data, preparing reports, and providing insights to support strategic decision-making. Candidates should have strong analytical skills, attention to detail, and proficiency in financial modeling. Contribute to our financial success!",
+        "min_salary": 80000,
+        "max_salary": 100000,
+        "job_url": "https://example.com/financial-analyst",
+        "job_location": "New York, NY",
+        "company_name": "Financial Insights Group",
+        "company_url": "https://financialinsights.com",
+        "job_posted_on": "2024-03-03"
+      },
+      {
+        "job_id": 9,
+        "job_title": "AI/ML Research Scientist",
+        "job_description": "Exciting opportunity for an AI/ML Research Scientist! This role involves conducting cutting-edge research in artificial intelligence and machine learning. Candidates should have a Ph.D. in a related field, strong programming skills, and a proven track record in AI/ML research. Join our research team and contribute to advancing the field!",
+        "min_salary": 110000,
+        "max_salary": 140000,
+        "job_url": "https://example.com/ai-ml-research-scientist",
+        "job_location": "Cambridge, MA",
+        "company_name": "InnovateAI Labs",
+        "company_url": "https://innovateai.com",
+        "job_posted_on": "2024-03-04"
+      },
+      {
+        "job_id": 10,
+        "job_title": "Healthcare Data Analyst",
+        "job_description": "Join our healthcare analytics team as a Data Analyst! This role involves analyzing healthcare data, generating insights, and contributing to data-driven decision-making. Candidates should have a strong background in data analysis, knowledge of healthcare systems, and experience with data visualization tools.",
+        "min_salary": 85000,
+        "max_salary": 110000,
+        "job_url": "https://example.com/healthcare-data-analyst",
+        "job_location": "Philadelphia, PA",
+        "company_name": "Health Insights Solutions",
+        "company_url": "https://healthinsights.com",
+        "job_posted_on": "2024-03-04"
+      },
+      {
+        "job_id": 11,
+        "job_title": "Frontend Developer",
+        "job_description": "We're hiring a Frontend Developer to create visually appealing and responsive web interfaces. This role requires expertise in HTML, CSS, and JavaScript, along with experience in frontend frameworks. Join our development team and contribute to the user experience of our digital products.",
+        "min_salary": 75000,
+        "max_salary": 95000,
+        "job_url": "https://example.com/frontend-developer",
+        "job_location": "Los Angeles, CA",
+        "company_name": "Digital Innovations Agency",
+        "company_url": "https://digitalinnovations.com",
+        "job_posted_on": "2024-03-04"
+      },
+      {
+        "job_id": 12,
+        "job_title": "Environmental Scientist",
+        "job_description": "Passionate about the environment? Join our team as an Environmental Scientist! This role involves conducting environmental assessments, collecting and analyzing data, and providing recommendations for sustainable practices. Candidates should have a degree in environmental science and a commitment to environmental stewardship.",
+        "min_salary": 90000,
+        "max_salary": 120000,
+        "job_url": "https://example.com/environmental-scientist",
+        "job_location": "Denver, CO",
+        "company_name": "Green Solutions Inc.",
+        "company_url": "https://greensolutions.com",
+        "job_posted_on": "2024-03-04"
+      },
+      {
+        "job_id": 13,
+        "job_title": "Sales Representative",
+        "job_description": "Join our sales team as a Sales Representative! This role involves building and maintaining client relationships, meeting sales targets, and contributing to the growth of our business. Candidates should have excellent communication and negotiation skills. Unlock your potential in the world of sales!",
+        "min_salary": 80000,
+        "max_salary": 100000,
+        "job_url": "https://example.com/sales-representative",
+        "job_location": "Dallas, TX",
+        "company_name": "Sales Dynamics Ltd.",
+        "company_url": "https://salesdynamics.com",
+        "job_posted_on": "2024-03-04"
+      },
+      {
+        "job_id": 14,
+        "job_title": "Legal Counsel",
+        "job_description": "We're seeking a qualified Legal Counsel to provide legal advice and support to our organization. Responsibilities include contract review, legal research, and ensuring compliance with applicable laws. Candidates should have a law degree and relevant experience in corporate law.",
+        "min_salary": 100000,
+        "max_salary": 130000,
+        "job_url": "https://example.com/legal-counsel",
+        "job_location": "Atlanta, GA",
+        "company_name": "Legal Insights Group",
+        "company_url": "https://legalinsights.com",
+        "job_posted_on": "2024-03-04"
+      }
+    ]
+  }
+  
+  
