@@ -7,11 +7,11 @@ with open('jobs.json', 'r') as jobs_file:
     jobs_data = json.load(jobs_file)
     print(jobs_data.keys())
 
-# @app.route('/')
-# def login():  
-#     return render_template('index.html')
-
 @app.route('/')
+def login():  
+    return render_template('index.html')
+
+@app.route('/search')
 def search(): 
     return render_template('job-list.html', jobs = jobs_data['jobs'])
 
