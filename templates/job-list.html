@@ -14,18 +14,14 @@
                             </div>
                             <div class="col-md-4">
                                 <select class="form-select border-0">
-                                    <option selected>Category</option>
-                                    <option value="1">Category 1</option>
-                                    <option value="2">Category 2</option>
-                                    <option value="3">Category 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0">
                                     <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
+                                    {% set locations = [] %}
+                                        {% for job in jobs %}
+                                            {% if job.job_location not in locations %}
+                                                {% set _ = locations.append(job.job_location) %}
+                                                <option value="{{ job.job_location }}">{{ job.job_location }}</option>
+                                            {% endif %}
+                                        {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -46,41 +42,30 @@
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
                     <!-- <div class="tab-content"> -->
                         <div id="tab-1" class="tab-pane fade show p-0 active">
+
+                            {% for job in jobs %}
+
                             <div class="job-item p-4 mb-4  col-md-5">
                                 <div class="row g-4">
                                     <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                         <div class="text-start ps-4">
-                                            <h5 class="mb-3">Software Engineer</h5>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
-                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$100000 - $120000</span>
+                                            <h5 class="mb-3">{{ job.job_title }}</h5> 
+                                            <h7><a href="{{ job.company_url }}">{{ job.company_name }}</a></h7>
+                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.job_location }}</span>
+                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>${{ job.min_salary }} - ${{ job.max_salary }}</span>
                                             <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Deadline: 01 Jan, 2045</small>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                         <div class="d-flex mb-3">
-                                            <a class="btn btn-primary" href="">Apply Now</a>
+                                            <a class="btn btn-primary" href="/jobs/{{ job.job_id }}">View Details</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            {% endfor %}
                             
-                            <div class="job-item p-4 mb-4 col-md-5">
-                                <div class="row g-4">
-                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                        <div class="text-start ps-4">
-                                            <h5 class="mb-3">Product Designer II</h5>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>San Jose, CA</span>
-                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$250000 - $285000</span>
-                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            <a class="btn btn-primary" href="">Apply Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
                         </div>
                     <!-- </div> -->

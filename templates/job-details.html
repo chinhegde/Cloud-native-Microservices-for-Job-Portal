@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Job search - JobSwift{% endblock %}
+
+{% block content %}
+
+<!-- Search Start -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-10">
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control border-0" placeholder="Keyword" />
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select border-0">
+                            <option selected>Location</option>
+                            {% set locations = [] %}
+                                {% for job in jobs %}
+                                    {% if job.job_location not in locations %}
+                                        {% set _ = locations.append(job.job_location) %}
+                                        <option value="{{ job.job_location }}">{{ job.job_location }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-dark border-0 w-100">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search End -->
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">{{ job.job_title }}</h1>
+        <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+            <!-- <div class="tab-content"> -->
+                <div id="tab-1" class="tab-pane fade show p-0 active" style="text-align: left; margin: 0 60px;">
+                    <p><strong>Location:</strong> {{ job.job_location }}</p>
+                    <p><strong>Company:</strong> <a href="{{ job.company_url }}">{{ job.company_name }}</a></p>
+                    <p><strong>Description:</strong> {{ job.job_description }}</p>
+                    <p><strong>Salary:</strong> ${{ job.min_salary }} - ${{ job.max_salary }}</p>
+                    <p><strong>Posted On:</strong> {{ job.job_posted_on }}</p>
+                    <div class="d-flex mb-3">
+                        <a class="btn btn-primary" href="{{job.job_url }}">Apply Now</a>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</div>
+{% endblock %}

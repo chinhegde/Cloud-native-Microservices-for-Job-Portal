@@ -9,7 +9,7 @@
       "job_url": "https://example.com/software-engineer",
       "job_location": "San Francisco, CA",
       "company_name": "Tech Innovators Inc.",
-      "company_url": "https://techinnovators.com",
+      "company_url": "https://google.com",
       "job_posted_on": "2024-03-02"
     },
     {
@@ -21,7 +21,7 @@
       "job_url": "https://example.com/data-scientist",
       "job_location": "New York, NY",
       "company_name": "Insightful Analytics Co.",
-      "company_url": "https://insightfulanalytics.com",
+      "company_url": "https://google.com",
       "job_posted_on": "2024-03-02"
     }
   ]
