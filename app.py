@@ -84,6 +84,15 @@ def job_details(job_id):
         return render_template('job-details.html', job=job)
     else:
         return "Job not found", 404
+    
+@app.route('/apply/<int:job_id>') 
+def apply(job_id):
+    job = next((job for job in jobs_data['jobs'] if job['job_id'] == job_id), None)
+    if job:
+        return render_template('apply.html', job=job)
+    else:
+        return "Job not found", 404
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
+    # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
+    app.run(debug = True)
