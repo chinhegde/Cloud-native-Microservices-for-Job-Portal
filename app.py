@@ -16,9 +16,9 @@ with open('jobs.json', 'r') as jobs_file:
 def login():  
     return render_template('index.html')
 
-# @app.route('/')
-# def search(): 
-#     return render_template('job-list.html', jobs = jobs_data['jobs'])
+@app.route('/search')
+def search(): 
+    return render_template('job-list.html', jobs = jobs_data['jobs'])
 
 @app.route('/contact')
 def contact():
