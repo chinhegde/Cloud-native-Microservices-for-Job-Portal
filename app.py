@@ -54,7 +54,20 @@ def user_profile():
                 for attribute in user_info:
                     if attribute['Name'] == 'name':
                         name = attribute['Value']
-            return ('Welcome ' + name)
+                    if attribute['Name'] == 'email':
+                        email = attribute['Value']
+                    if attribute['Name'] == 'birthdate':
+                        birthdate = attribute['Value']
+            
+            if os.path.exists('users.json'):
+                with open('users.json', 'r+') as file:
+                    data = json.load(file)
+                    users = data['users']
+                    for user in users:
+                        if user['email'] == email:
+                            return render_template('job-list.html', jobs = jobs_data['jobs'])
+
+            return render_template('register.html', user=name, email=email, dob=birthdate)
         else:
             return 'Failed to exchange authorization code for access token'
     else:
@@ -76,6 +89,56 @@ def get_user_info(access_token):
     except Exception as e:
         print("Error:", e)
         return None
+
+@app.route('/register', methods=['POST'])
+def user_registeration():
+    print(request.form.values)
+    full_name = request.form.get('full_name')
+    email = request.form.get('email')
+    phone = request.form.get('phone')
+    jobswift_id = request.form.get('jobswift_id')
+    birth_date = request.form.get('dob')
+    user_intro = request.form.get('about')
+    company_1 = request.form.get('company_1')
+    from_date_1 = request.form.get('from_date_1')
+    to_date_1 = request.form.get('to_date_1')
+    company_2 = request.form.get('company_2')
+    from_date_2 = request.form.get('from_date_2')
+    to_date_2 = request.form.get('to_date_2')
+    company_3 = request.form.get('company_3')
+    from_date_3 = request.form.get('from_date_3')
+    to_date_3 = request.form.get('to_date_3')
+
+    user_profile = {
+        'full_name': full_name,
+        'email': email,
+        'phone': phone,
+        'jobswift_id': jobswift_id,
+        'birth_date': birth_date,
+        'user_intro': user_intro,
+        'company_1': company_1,
+        'from_date_1': from_date_1,
+        'to_date_1': to_date_1,
+        'company_2': company_2,
+        'from_date_2': from_date_2,
+        'to_date_2': to_date_2,
+        'company_3': company_3,
+        'from_date_3': from_date_3,
+        'to_date_3': to_date_3
+    }
+
+    if os.path.exists('users.json'):
+        with open('users.json', 'r+') as file:
+            data = json.load(file)
+            data['users'].append(user_profile)
+            file.seek(0)
+            json.dump(data, file, indent=4)
+    else:
+        with open('users.json', 'w') as file:
+            data = {'users': [user_profile]}
+            json.dump(data, file, indent=4)
+
+    return render_template('job-list.html', jobs = jobs_data['jobs'])
 
 @app.route('/jobs/<int:job_id>') 
 def job_details(job_id):
