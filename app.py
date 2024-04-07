@@ -92,6 +92,74 @@ def apply(job_id):
         return render_template('apply.html', job=job)
     else:
         return "Job not found", 404
+    
+@app.route('/post-job') 
+def post_job():
+    return render_template('post-job.html')
+    
+@app.route('/submitapp/<int:job_id>', methods=['POST'])
+def submit_application(job_id):
+    full_name = request.form.get('full_name')
+    email = request.form.get('email')
+    phone = request.form.get('phone')
+    jobswift_id = request.form.get('jobswift_id')
+
+    application = {
+        'job_id': job_id,
+        'full_name': full_name,
+        'email': email,
+        'phone': phone,
+        'jobswift_id': jobswift_id
+    }
+
+    if os.path.exists('applications.json'):
+        with open('applications.json', 'r+') as file:
+            data = json.load(file)
+            data['applications'].append(application)
+            file.seek(0)
+            json.dump(data, file, indent=4)
+    else:
+        with open('applications.json', 'w') as file:
+            data = {'applications': [application]}
+            json.dump(data, file, indent=4)
+
+    return render_template('thankyou.html')
+
+@app.route('/createjob', methods=['POST'])
+def create_job():
+    with open('jobs.json', 'r') as f:
+        jobs_data = json.load(f)
+    
+    job_title = request.form['job_title']
+    job_description = request.form['job_description']
+    min_salary = int(request.form['min_salary'])
+    max_salary = int(request.form['max_salary'])
+    job_location = request.form['job_location']
+    company_name = request.form['company_name']
+    company_url = request.form['company_url']
+    job_posted_on = request.form['job_posted_on']
+    
+    job_id = len(jobs_data['jobs']) + 1
+    
+    new_job = {
+        "job_id": job_id,
+        "job_title": job_title,
+        "job_description": job_description,
+        "min_salary": min_salary,
+        "max_salary": max_salary,
+        "job_url": "/apply/{}".format(job_id),
+        "job_location": job_location,
+        "company_name": company_name,
+        "company_url": company_url,
+        "job_posted_on": job_posted_on
+    }
+    
+    jobs_data['jobs'].append(new_job)
+    
+    with open('jobs.json', 'w') as f:
+        json.dump(jobs_data, f, indent=2)
+    
+    return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
     # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))

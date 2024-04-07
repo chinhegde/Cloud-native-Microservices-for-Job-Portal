@@ -1,55 +1,101 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Application Form</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  form {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none;
+  }
+
+  input[type="file"] {
+    margin-bottom: 15px;
+    padding: 15px;
+  }
+
+  input[type="submit"] {
+    background-color: #4c74af;
+    color: white;
+    padding: 14px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    display: block;
+    width: 50%;
+    border-radius: 20px;
+    margin: 10px auto;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #000000;
+    
+  }
+
+</style>
+
 </head>
-
 <body>
-  <div class="col-md-6 offset-md-3 mt-5">
-    <h1>Job Application Form</h1>
-    <form accept-charset="UTF-8" action="https://getform.io/f/{your-form-endpoint-goes-here}" method="POST" enctype="multipart/form-data" target="_blank">
-      <div class="form-group">
-        <label for="exampleInputName">Full Name</label>
-        <input type="text" name="fullname" class="form-control" id="exampleInputName" placeholder="Enter your name and surname" required="required">
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1" required="required">Email address</label>
-        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
-      </div>
-      <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St">
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputCity">City</label>
-          <input type="text" name="city" class="form-control" id="inputCity" placeholder="Istanbul">
-        </div>
-        <div class="form-group col-md-2">
-          <label for="inputZip">Zip</label>
-          <input type="text" name="zip" class="form-control" id="inputZip" placeholder="34000">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-        <div class="col-10">
-          <input class="form-control" name="tel" type="tel" value="1-(555)-555-5555" id="example-tel-input">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="example-date-input" class="col-3 col-form-label">Start Date</label>
-        <div class="col-10">
-          <input class="form-control" name="starting_date" type="date" value="2020-02-01" id="example-date-input">
-        </div>
-      </div>
-      <div class="form-group mt-3">
-        <label class="mr-4">Upload your CV:</label>
-        <input type="file" name="file">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+<h2>Job Application Form</h2>
+<form action="/submitapp/{{ job.job_id }}" method="post">
+  <label for="full_name">Full Name:</label><br>
+  <input type="text" id="full_name" name="full_name" placeholder="Eg: John Doe" required><br>
+  
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email" placeholder="email@abc.com" required><br>
+  
+  <label for="phone">Phone Number:</label><br>
+  <input type="tel" id="phone" name="phone" placeholder="+1 999-999-9999"required><br>
+  
+  <label for="resume">Upload Resume:</label><br>
+  <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required><br>
+  
+  <label for="cover_letter">Upload Cover Letter:</label><br>
+  <input type="file" id="cover_letter" name="cover_letter" accept=".pdf,.doc,.docx"><br>
+  
+  <label for="jobswift_id">JobSwift Username:</label><br>
+  <input type="text" id="jobswift_id" name="jobswift_id" placeholder="johndoe123"><br>
+  
+  <input type="submit" value="Submit">
+</form>
 </body>
-
 </html>

@@ -25,29 +25,52 @@
       "job_posted_on": "2024-03-02"
     },
     {
-      "job_id": 4,
-      "job_title": "Software Engineer",
-      "job_description": "As a Software Engineer, you will be responsible for developing high-quality software solutions. This role requires a minimum of a Bachelor's degree in Computer Science or related field. Responsibilities include designing, coding, testing, and debugging applications. Strong skills in Python, JavaScript, and experience with web development frameworks are essential. The ideal candidate should have excellent problem-solving abilities and a passion for creating innovative software.",
-      "min_salary": 80000,
-      "max_salary": 100000,
-      "job_url": "/apply/4",
-      "job_location": "San Antonia, TX",
-      "company_name": "Chinmayi Innovators Inc.",
-      "company_url": "https://google.com",
-      "job_posted_on": "2024-03-02"
+      "job_id": 3,
+      "job_title": "Data Analyst",
+      "job_description": "Should be the best person ever. You need Python, SQL, Tableau.",
+      "min_salary": 90000,
+      "max_salary": 12000,
+      "job_url": "/apply/3",
+      "job_location": "San Jose, CA",
+      "company_name": "Google",
+      "company_url": "https://www.google.com",
+      "job_posted_on": "2024-04-06"
     },
     {
-      "job_id": 3,
-      "job_title": "Data Scientist",
-      "job_description": "Join our Data Science team! We are seeking a Data Scientist with a Master's or Ph.D. in Statistics, Computer Science, or a related field. Responsibilities include analyzing and interpreting complex data sets, implementing machine learning models, and presenting findings to stakeholders. Proficiency in Python, R, and experience with data visualization tools is required. Competitive salary and benefits package offered.",
+      "job_id": 4,
+      "job_title": "Backend Engineer",
+      "job_description": "Should be the best person ever. You need Python, Javascript, AWS, Ruby on Rails",
       "min_salary": 90000,
-      "max_salary": 120000,
-      "job_url": "/apply/3",
-      "job_location": "New Jersey, NY",
-      "company_name": "Durga Analytics Co.",
-      "company_url": "https://google.com",
-      "job_posted_on": "2024-03-02"
+      "max_salary": 12000,
+      "job_url": "/apply/4",
+      "job_location": "San Jose, CA",
+      "company_name": "Google",
+      "company_url": "https://www.google.com",
+      "job_posted_on": "2024-04-06"
+    },
+    {
+      "job_id": 5,
+      "job_title": "Frontend Engineer",
+      "job_description": "You need Python, Javascript, React, CSS HTML",
+      "min_salary": 120000,
+      "max_salary": 140000,
+      "job_url": "/apply/5",
+      "job_location": "Mountain View, CA",
+      "company_name": "Google",
+      "company_url": "https://www.google.com",
+      "job_posted_on": "2024-04-06"
+    },
+    {
+      "job_id": 6,
+      "job_title": "Full Stack Engineer",
+      "job_description": "You need Python, Javascript, React, CSS HTML and everything else on planet earth.",
+      "min_salary": 120000,
+      "max_salary": 140000,
+      "job_url": "/apply/6",
+      "job_location": "Houston, TX",
+      "company_name": "HPE",
+      "company_url": "https://www.hp.com",
+      "job_posted_on": "2024-04-06"
     }
   ]
 }
-

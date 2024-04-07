@@ -405,9 +405,6 @@ button:hover{
 	transform: scale(.6);
 }
 
-.container.job-application {
-    padding: 15 px;
-}
 .job-application-form {
     max-width: 400px;
     margin: 0 auto;
@@ -419,11 +416,6 @@ button:hover{
 
 .form-group {
     margin-bottom: 20px;
-}
-
-.label {
-    display: block;
-    font-weight: bold;
 }
 
 .input-field {
