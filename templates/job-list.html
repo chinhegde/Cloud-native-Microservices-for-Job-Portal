@@ -9,11 +9,12 @@
                 <div class="row g-2">
                     <div class="col-md-10">
                         <div class="row g-2">
+                            <form method="GET" action="/search">
                             <div class="col-md-4">
-                                <input type="text" class="form-control border-0" placeholder="Keyword" />
+                                <input type="text" name="keyword" class="form-control border-0" placeholder="Keyword" />
                             </div>
                             <div class="col-md-4">
-                                <select class="form-select border-0">
+                                <select class="form-select border-0"  name="location">
                                     <option selected>Location</option>
                                     {% set locations = [] %}
                                         {% for job in jobs %}
@@ -27,8 +28,9 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-dark border-0 w-100">Search</button>
+                        <button type="submit" class="btn btn-dark border-0 w-100">Search</button>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -53,7 +55,7 @@
                                             <h7><a href="{{ job.company_url }}">{{ job.company_name }}</a></h7>
                                             <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.job_location }}</span>
                                             <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>${{ job.min_salary }} - ${{ job.max_salary }}</span>
-                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Deadline: 01 Jan, 2045</small>
+                                            <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Deadline: 01 Jan, 2045</small> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">

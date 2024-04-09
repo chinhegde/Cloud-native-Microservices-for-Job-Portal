@@ -13,6 +13,18 @@
       "job_posted_on": "2024-03-02"
     },
     {
+      "job_id": 1,
+      "job_title": "Data Engineer",
+      "job_description": "As a Software Engineer, you will be responsible for developing high-quality software solutions. This role requires a minimum of a Bachelor's degree in Computer Science or related field. Responsibilities include designing, coding, testing, and debugging applications. Strong skills in Python, JavaScript, and experience with web development frameworks are essential. The ideal candidate should have excellent problem-solving abilities and a passion for creating innovative software.",
+      "min_salary": 80000,
+      "max_salary": 100000,
+      "job_url": "/apply/1",
+      "job_location": "San Francisco, CA",
+      "company_name": "Blah Innovators Inc.",
+      "company_url": "https://google.com",
+      "job_posted_on": "2024-03-02"
+    },
+    {
       "job_id": 2,
       "job_title": "Data Scientist",
       "job_description": "Join our Data Science team! We are seeking a Data Scientist with a Master's or Ph.D. in Statistics, Computer Science, or a related field. Responsibilities include analyzing and interpreting complex data sets, implementing machine learning models, and presenting findings to stakeholders. Proficiency in Python, R, and experience with data visualization tools is required. Competitive salary and benefits package offered.",
@@ -71,6 +83,18 @@
       "company_name": "HPE",
       "company_url": "https://www.hp.com",
       "job_posted_on": "2024-04-06"
+    },
+    {
+      "job_id": 7,
+      "job_title": "SDE 3",
+      "job_description": "ikujhtfgrdcgvbh",
+      "min_salary": 23,
+      "max_salary": 67238,
+      "job_url": "/apply/7",
+      "job_location": "Sunnyvale, CA",
+      "company_name": "Walmart",
+      "company_url": "https://www.google.com",
+      "job_posted_on": "2024-04-07"
     }
   ]
 }
