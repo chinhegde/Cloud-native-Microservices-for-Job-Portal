@@ -65,7 +65,7 @@ def user_profile():
                     users = data['users']
                     for user in users:
                         if user['email'] == email:
-                            return render_template('job-list.html', jobs = jobs_data['jobs'])
+                            return redirect('/search')
 
             return render_template('register.html', user=name, email=email, dob=birthdate)
         else:
@@ -138,7 +138,7 @@ def user_registeration():
             data = {'users': [user_profile]}
             json.dump(data, file, indent=4)
 
-    return render_template('job-list.html', jobs = jobs_data['jobs'])
+    return redirect('/search')
 
 @app.route('/jobs/<int:job_id>') 
 def job_details(job_id):
@@ -225,5 +225,5 @@ def create_job():
     return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
-    # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
-    app.run(debug = True)
+    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
+    #app.run(debug = True)
