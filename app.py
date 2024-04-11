@@ -18,24 +18,31 @@ def login():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    if request.method == 'POST':
-        keyword = request.form.get('keyword')
-        location = request.args.get('location')
-    else:
-        keyword = request.args.get('keyword')
-        location = request.args.get('location')
+    locs = set()
+    for i in jobs_data['jobs']:
+        locs.add(i['job_location'])
+
+    keyword = request.form.get('keyword') if request.method == 'POST' else request.args.get('keyword')
+    location = request.form.get('location') if request.method == 'POST' else request.args.get('location')
+
 
     filtered_jobs = []
 
-    if keyword or location:
-        for job in jobs_data['jobs']:
-            if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
-                if location == job['job_location']:
+    if location != "Location":
+        if keyword:
+            for job in jobs_data['jobs']:
+                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+                    if job['job_location'] == location:
+                        filtered_jobs.append(job)
+    elif keyword and location == "Location":
+        if keyword:
+            for job in jobs_data['jobs']:
+                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
                     filtered_jobs.append(job)
     else:
         filtered_jobs = jobs_data['jobs']  
 
-    return render_template('job-list.html', jobs=filtered_jobs)
+    return render_template('job-list.html', jobs=filtered_jobs, locs = locs)
 
 @app.route('/user-profile')
 def user(): 

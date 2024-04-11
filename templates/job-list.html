@@ -16,12 +16,8 @@
                             <div class="col-md-4">
                                 <select class="form-select border-0"  name="location">
                                     <option selected>Location</option>
-                                    {% set locations = [] %}
-                                        {% for job in jobs %}
-                                            {% if job.job_location not in locations %}
-                                                {% set _ = locations.append(job.job_location) %}
-                                                <option value="{{ job.job_location }}">{{ job.job_location }}</option>
-                                            {% endif %}
+                                        {% for loc in locs %}
+                                                <option value="{{ loc }}">{{ loc }}</option>
                                         {% endfor %}
                                 </select>
                             </div>
@@ -45,7 +41,7 @@
                     <!-- <div class="tab-content"> -->
                         <div id="tab-1" class="tab-pane fade show p-0 active">
 
-                            {% for job in jobs[:4] %}
+                            {% for job in jobs %}
 
                             <div class="job-item p-4 mb-4  col-md-5">
                                 <div class="row g-4">
