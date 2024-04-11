@@ -225,5 +225,5 @@ def create_job():
     return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
-    #app.run(debug = True)
+    # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
+    app.run(debug = True)

@@ -1,21 +1,9 @@
 import pandas as pd
 
-def dataCleaning_multipleFiles(job_file, company_file, salary_file, out_file):
-    #job_df = pd.DataFrame
-    #company_df = pd.DataFrame
-    #salary_df = pd.DataFrame
-
-    #if not job_file:
+def joinJobPostCompanyAndSalary(job_file, company_file, salary_file, out_file):
     job_df = pd.read_csv(job_file, header=0)
-    #print(job_df.columns)
-    
-    #if company_file != '':
     company_df = pd.read_csv(company_file, header=0)
-
-    #if salary_file != '':
     salary_df = pd.read_csv(salary_file, header=0)
-    #print(len(salary_df))
-    #print(salary_df.columns)
 
     if 'max_salary' in job_df.columns and 'max_salary' in salary_df.columns:
         job_df = job_df.drop('max_salary', axis=1)
@@ -40,10 +28,8 @@ def dataCleaning_multipleFiles(job_file, company_file, salary_file, out_file):
     pay_period = []
     currency = []
     for index, row in job_df.iterrows():
-        #print(row)
         if 'job_id' in job_df.columns:
             job_id = row['job_id']
-        #print(job_id)
         if company_file != "" and 'company_id' in job_df.columns and 'company_id' in company_df.columns and 'name' in company_df.columns:
             company_id = row['company_id']
             company_row = company_df.loc[company_df['company_id'] == company_id]
@@ -55,7 +41,6 @@ def dataCleaning_multipleFiles(job_file, company_file, salary_file, out_file):
         if salary_file != "":
             if 'job_id' in salary_df.columns:
                 salary_row = salary_df.loc[salary_df['job_id'] == job_id]
-                #print(salary_row)
 
                 if 'min_salary' in salary_df.columns and not salary_row['min_salary'].empty:
                     min_salary.append(salary_row['min_salary'].values[0])
@@ -82,12 +67,6 @@ def dataCleaning_multipleFiles(job_file, company_file, salary_file, out_file):
                 else:
                     currency.append(' ')
 
-    print(len(job_df))
-    print(len(company_name))
-    print(len(min_salary))
-    print(len(max_salary))
-    print(len(pay_period))
-    print(len(currency))
     job_df['company_name'] = company_name
     job_df['min_salary'] = min_salary
     job_df['max_salary'] = max_salary
@@ -116,82 +95,21 @@ def dataCleaning_multipleFiles(job_file, company_file, salary_file, out_file):
 
     job_df.to_csv(out_file, encoding='utf-8', index=False)
 
-'''
-    if 'company_id' in job_df.columns:
-        job_df = job_df.drop('company_id', axis=1)
-
-    if 'formatted_work_type' in job_df.columns:
-        job_df = job_df.drop('formatted_work_type', axis=1)
-
-    if 'applies' in job_df.columns:
-        job_df = job_df.drop('applies', axis=1)
-
-    if 'original_listed_time' in job_df.columns:
-        job_df = job_df.drop('original_listed_time', axis=1)
-
-    if 'remote_allowed' in job_df.columns:
-        job_df = job_df.drop('remote_allowed', axis=1)
-
-    if 'views' in job_df.columns:
-        job_df = job_df.drop('views', axis=1)
-
-    if 'application_url' in job_df.columns:
-        job_df = job_df.drop('application_url', axis=1)
-
-    if 'application_type' in job_df.columns:
-        job_df = job_df.drop('application_type', axis=1)
-
-    if 'expiry' in job_df.columns:
-        job_df = job_df.drop('expiry', axis=1)
-
-    if 'closed_time' in job_df.columns:
-        job_df = job_df.drop('closed_time', axis=1)
-
-    if 'formatted_experience_level' in job_df.columns:
-        job_df = job_df.drop('formatted_experience_level', axis=1)
-
-    if 'skills_desc' in job_df.columns:
-        job_df = job_df.drop('skills_desc', axis=1)
-
-    if 'listed_time' in job_df.columns:
-        job_df = job_df.drop('listed_time', axis=1)
-
-    if 'posting_domain' in job_df.columns:
-        job_df = job_df.drop('posting_domain', axis=1)
-
-    if 'sponsored' in job_df.columns:
-        job_df = job_df.drop('sponsored', axis=1)
-
-    if 'work_type' in job_df.columns:
-        job_df = job_df.drop('work_type', axis=1)
-
-    if 'compensation_type' in job_df.columns:
-        job_df = job_df.drop('compensation_type', axis=1)
-
-    if 'scraped' in job_df.columns:
-        job_df = job_df.drop('scraped', axis=1)
-'''
-
-#dataCleaning_multipleFiles('../Dataset/dataset_1/job_postings.csv', '../Dataset/dataset_1/company_details/companies.csv', '../Dataset/dataset_1/job_details/salaries.csv', '../Dataset/cleaned_datasets/cleaned_dataset_1.csv')
+joinJobPostCompanyAndSalary('../Dataset/dataset_1/job_postings.csv', '../Dataset/dataset_1/company_details/companies.csv', '../Dataset/dataset_1/job_details/salaries.csv', '../Dataset/cleaned_datasets/cleaned_dataset_1.csv')
 
 
-def dataCleaning_twoFiles(job_file, company_file, out_file):
+def joinJobPostAndCompany(job_file, company_file, out_file):
     jobs_df = pd.read_csv(job_file, header=0)
-    #print(jobs_df.columns)
-    
     companies_df = pd.read_csv(company_file, header=0)
-    #print(companies_df.columns)
 
     company_name = []
     for index, row in jobs_df.iterrows():
-        #print(row)
         if company_file != "" and 'company_id' in jobs_df.columns and 'company_id' in companies_df.columns and 'name' in companies_df.columns:
             company_id = row['company_id']
             company_row = companies_df.loc[companies_df['company_id'] == company_id]
 
             if company_row.empty:
                 jobs_df = jobs_df.drop(index)
-                #jobs_df = jobs_df.reset_index(inplace=True)
             else:
                 if 'name' in companies_df.columns and not company_row['name'].empty:
                     company_name.append(company_row['name'].values[0])
@@ -221,11 +139,11 @@ def dataCleaning_twoFiles(job_file, company_file, out_file):
 
     jobs_df.to_csv(out_file, encoding='utf-8', index=False)
 
-dataCleaning_twoFiles('../Dataset/dataset_9/job_postings.csv', '../Dataset/dataset_9/companies.csv', '../Dataset/cleaned_datasets/cleaned_dataset_9.csv')
+joinJobPostAndCompany('../Dataset/dataset_9/job_postings.csv', '../Dataset/dataset_9/companies.csv', '../Dataset/cleaned_datasets/cleaned_dataset_9.csv')
 
 
 
-def dataCleaning_singleFile(job_file, out_file):
+def cleanJobPostings(job_file, out_file):
     job_df = pd.read_csv(job_file, header=0)
 
     if 'jod_id' in job_df.columns:
@@ -295,9 +213,9 @@ def dataCleaning_singleFile(job_file, out_file):
 
 
 
-#dataCleaning_singleFile('../Dataset/dataset_2/jobs.csv', '../Dataset/cleaned_datasets/cleaned_dataset_2.csv')
-#dataCleaning_singleFile('../Dataset/dataset_3/marketing_sample_for_trulia_com-real_estate__20190901_20191031__30k_data.csv', '../Dataset/cleaned_datasets/cleaned_dataset_3.csv')
-#dataCleaning_singleFile('../Dataset/dataset_5/data job posts.csv', '../Dataset/cleaned_datasets/cleaned_dataset_5.csv')
-#dataCleaning_singleFile('../Dataset/dataset_7/linkdin_Job_data.csv', '../Dataset/cleaned_datasets/cleaned_dataset_7.csv')
-#dataCleaning_singleFile('../Dataset/dataset_8/Cleaned_DS_Jobs.csv', '../Dataset/cleaned_datasets/cleaned_dataset_8.csv')
-#dataCleaning_singleFile('../Dataset/dataset_10/data job posts.csv', '../Dataset/cleaned_datasets/cleaned_dataset_10.csv')
+cleanJobPostings('../Dataset/dataset_2/jobs.csv', '../Dataset/cleaned_datasets/cleaned_dataset_2.csv')
+cleanJobPostings('../Dataset/dataset_3/marketing_sample_for_trulia_com-real_estate__20190901_20191031__30k_data.csv', '../Dataset/cleaned_datasets/cleaned_dataset_3.csv')
+cleanJobPostings('../Dataset/dataset_5/data job posts.csv', '../Dataset/cleaned_datasets/cleaned_dataset_5.csv')
+cleanJobPostings('../Dataset/dataset_7/linkdin_Job_data.csv', '../Dataset/cleaned_datasets/cleaned_dataset_7.csv')
+cleanJobPostings('../Dataset/dataset_8/Cleaned_DS_Jobs.csv', '../Dataset/cleaned_datasets/cleaned_dataset_8.csv')
+cleanJobPostings('../Dataset/dataset_10/data job posts.csv', '../Dataset/cleaned_datasets/cleaned_dataset_10.csv')
