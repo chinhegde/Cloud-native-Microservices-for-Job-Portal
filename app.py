@@ -95,7 +95,7 @@ def user_profile():
                         if user['email'] == email:
                             return redirect('/search')
 
-            return render_template('register.html', user=name, email=email, dob=birthdate)
+            return render_template('user-registration.html', user=name, email=email, dob=birthdate)
         else:
             return 'Failed to exchange authorization code for access token'
     else:
@@ -126,16 +126,14 @@ def user_registeration():
     phone = request.form.get('phone')
     jobswift_id = request.form.get('jobswift_id')
     birth_date = request.form.get('dob')
-    user_intro = request.form.get('about')
-    company_1 = request.form.get('company_1')
-    from_date_1 = request.form.get('from_date_1')
-    to_date_1 = request.form.get('to_date_1')
-    company_2 = request.form.get('company_2')
-    from_date_2 = request.form.get('from_date_2')
-    to_date_2 = request.form.get('to_date_2')
-    company_3 = request.form.get('company_3')
-    from_date_3 = request.form.get('from_date_3')
-    to_date_3 = request.form.get('to_date_3')
+    address_line_1 = request.form.get('address_line_1')
+    address_line_2 = request.form.get('address_line_2')
+    postcode = request.form.get('postcode')
+    country = request.form.get('country')
+    state = request.form.get('state')
+    education = request.form.get('education')
+    experience = request.form.get('experience')
+    skills = request.form.get('skills')
 
     user_profile = {
         'full_name': full_name,
@@ -143,16 +141,14 @@ def user_registeration():
         'phone': phone,
         'jobswift_id': jobswift_id,
         'birth_date': birth_date,
-        'user_intro': user_intro,
-        'company_1': company_1,
-        'from_date_1': from_date_1,
-        'to_date_1': to_date_1,
-        'company_2': company_2,
-        'from_date_2': from_date_2,
-        'to_date_2': to_date_2,
-        'company_3': company_3,
-        'from_date_3': from_date_3,
-        'to_date_3': to_date_3
+        'address_line_1': address_line_1,
+        'address_line_2': address_line_2,
+        'postcode': postcode,
+        'country': country,
+        'state': state,
+        'education': education,
+        'experience': experience,
+        'skills': skills
     }
 
     if os.path.exists('users.json'):
