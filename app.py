@@ -19,9 +19,37 @@ with open('/application/jobs.json', 'r') as jobs_file:
 def login():  
     return render_template('index.html', public_ip=publicIP)
 
-@app.route('/search')
-def search(): 
-    return render_template('job-list.html', jobs = jobs_data['jobs'])
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    locs = set()
+    for i in jobs_data['jobs']:
+        locs.add(i['job_location'])
+
+    keyword = request.form.get('keyword') if request.method == 'POST' else request.args.get('keyword')
+    location = request.form.get('location') if request.method == 'POST' else request.args.get('location')
+
+
+    filtered_jobs = []
+
+    if location != "Location":
+        if keyword:
+            for job in jobs_data['jobs']:
+                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+                    if job['job_location'] == location:
+                        filtered_jobs.append(job)
+    elif keyword and location == "Location":
+        if keyword:
+            for job in jobs_data['jobs']:
+                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+                    filtered_jobs.append(job)
+    else:
+        filtered_jobs = jobs_data['jobs']  
+
+    return render_template('job-list.html', jobs=filtered_jobs, locs = locs)
+
+@app.route('/user-profile')
+def user(): 
+    return render_template('user-profile.html')
 
 @app.route('/contact')
 def contact():
