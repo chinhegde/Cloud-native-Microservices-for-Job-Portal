@@ -4,17 +4,20 @@ import requests
 import os
 import boto3
 import jwt
+import sys
 
 app = Flask(__name__)
 cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
+dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+userTable = dynamodb.Table('users')
 
-with open('jobs.json', 'r') as jobs_file:
+with open('/application/jobs.json', 'r') as jobs_file:
     jobs_data = json.load(jobs_file)
     print(jobs_data.keys())
 
 @app.route('/')
 def login():  
-    return render_template('index.html')
+    return render_template('index.html', public_ip=publicIP)
 
 @app.route('/search')
 def search(): 
@@ -28,16 +31,19 @@ def contact():
 def user_profile():
     authorization_code = request.args.get('code')
     print(authorization_code)
+    redirect_url = 'https://' + publicIP + '/user'
+    print(redirect_url)
 
     if authorization_code:
         access_token_url = f'https://jobsearch.auth.us-west-1.amazoncognito.com/oauth2/token'
         query_parms = {
             'grant_type': 'authorization_code',
             'client_id': '7jtg9vv6jrc03a1clorb2s4d4r',
-            'redirect_uri': 'http://localhost:9001/user',
+            'redirect_uri': redirect_url,
             'scope': 'aws.cognito.signin.user.admin',
             'code': authorization_code
         }
+
         response = requests.post(access_token_url, data=query_parms)
         if response.status_code == 200:
             access_token = response.json().get('access_token')
@@ -58,13 +64,15 @@ def user_profile():
                         email = attribute['Value']
                     if attribute['Name'] == 'birthdate':
                         birthdate = attribute['Value']
-            
-            if os.path.exists('users.json'):
-                with open('users.json', 'r+') as file:
-                    data = json.load(file)
-                    users = data['users']
-                    for user in users:
-                        if user['email'] == email:
+
+            print(email)
+            db_response = userTable.get_item(Key={'email':email})
+            if 'Item' in db_response:
+                if 'email' in db_response['Item']:
+                    user_email = db_response['Item']['email']
+                    print(user_email)
+                    if user_email:
+                        if user_email == email:
                             return redirect('/search')
 
             return render_template('user-registration.html', user=name, email=email, dob=birthdate)
@@ -107,32 +115,22 @@ def user_registeration():
     experience = request.form.get('experience')
     skills = request.form.get('skills')
 
-    user_profile = {
-        'full_name': full_name,
-        'email': email,
-        'phone': phone,
-        'jobswift_id': jobswift_id,
-        'birth_date': birth_date,
-        'address_line_1': address_line_1,
-        'address_line_2': address_line_2,
-        'postcode': postcode,
-        'country': country,
-        'state': state,
-        'education': education,
-        'experience': experience,
-        'skills': skills
-    }
-
-    if os.path.exists('users.json'):
-        with open('users.json', 'r+') as file:
-            data = json.load(file)
-            data['users'].append(user_profile)
-            file.seek(0)
-            json.dump(data, file, indent=4)
-    else:
-        with open('users.json', 'w') as file:
-            data = {'users': [user_profile]}
-            json.dump(data, file, indent=4)
+    db_response = userTable.put_item(
+        Item={
+            'full_name': str(full_name),
+            'email': str(email),
+            'phone': str(phone),
+            'jobswift_id': str(jobswift_id),
+            'birth_date': str(birth_date),
+            'address_line_1': str(address_line_1),
+            'address_line_2': str(address_line_2),
+            'postcode': str(postcode),
+            'country': str(country),
+            'state': str(state),
+            'education': str(education),
+            'experience': str(experience),
+            'skills': str(skills)
+        })
 
     return redirect('/search')
 
@@ -171,14 +169,14 @@ def submit_application(job_id):
         'jobswift_id': jobswift_id
     }
 
-    if os.path.exists('applications.json'):
-        with open('applications.json', 'r+') as file:
+    if os.path.exists('/application/applications.json'):
+        with open('/application/applications.json', 'r+') as file:
             data = json.load(file)
             data['applications'].append(application)
             file.seek(0)
             json.dump(data, file, indent=4)
     else:
-        with open('applications.json', 'w') as file:
+        with open('/application/applications.json', 'w') as file:
             data = {'applications': [application]}
             json.dump(data, file, indent=4)
 
@@ -186,7 +184,7 @@ def submit_application(job_id):
 
 @app.route('/createjob', methods=['POST'])
 def create_job():
-    with open('jobs.json', 'r') as f:
+    with open('/application/jobs.json', 'r') as f:
         jobs_data = json.load(f)
     
     job_title = request.form['job_title']
@@ -215,11 +213,13 @@ def create_job():
     
     jobs_data['jobs'].append(new_job)
     
-    with open('jobs.json', 'w') as f:
+    with open('/application/jobs.json', 'w') as f:
         json.dump(jobs_data, f, indent=2)
     
     return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
-    # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)))
-    app.run(debug = True)
+    publicIP = sys.argv[1]
+    publicIP = publicIP.strip()
+    print(publicIP)
+    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)), ssl_context='adhoc')
