@@ -11,13 +11,13 @@ cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 userTable = dynamodb.Table('users')
 
-with open('/application/jobs.json', 'r') as jobs_file:
+with open('applicantion\jobs.json', 'r') as jobs_file:
     jobs_data = json.load(jobs_file)
     print(jobs_data.keys())
 
 @app.route('/')
 def login():  
-    return render_template('index.html', public_ip=publicIP)
+    return render_template('index.html') #, public_ip=publicIP)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -50,6 +50,10 @@ def search():
 @app.route('/user-profile')
 def user(): 
     return render_template('user-profile.html')
+
+@app.route('/view-applicants')
+def view_applicants(): 
+    return render_template('view-applicants.html')
 
 @app.route('/contact')
 def contact():
@@ -251,3 +255,4 @@ if __name__ == '__main__':
     publicIP = publicIP.strip()
     print(publicIP)
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)), ssl_context='adhoc')
+    # app.run(debug=True)
