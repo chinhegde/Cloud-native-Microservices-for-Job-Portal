@@ -11,14 +11,14 @@ cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 userTable = dynamodb.Table('users')
 
-# with open('/application/jobs.json', 'r') as jobs_file:
+#with open('/application/jobs.json', 'r') as jobs_file:
 with open('jobs.json', 'r') as jobs_file:
     jobs_data = json.load(jobs_file)
     print(jobs_data.keys())
 
 @app.route('/')
 def login():  
-    return render_template('index.html') #, public_ip=publicIP)
+    return render_template('index.html', public_ip=publicIP)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -144,6 +144,8 @@ def user_registeration():
     experience = request.form.get('experience')
     skills = request.form.get('skills')
     recruiter = request.form.get('recruiter')
+    website = request.form.get('website')
+    github_link = request.form.get('github_link')
 
     db_response = userTable.put_item(
         Item={
@@ -160,7 +162,9 @@ def user_registeration():
             'education': str(education),
             'experience': str(experience),
             'skills': str(skills),
-            'recruiter': bool(recruiter)
+            'recruiter': bool(recruiter),
+            'website': str(website),
+            'github_link': str(github_link)
         })
 
     return redirect('/search')
@@ -250,8 +254,8 @@ def create_job():
     return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
-    # publicIP = sys.argv[1]
-    # publicIP = publicIP.strip()
-    # print(publicIP)
-    # app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)), ssl_context='adhoc')
-    app.run(debug=True)
+    publicIP = sys.argv[1]
+    publicIP = publicIP.strip()
+    print(publicIP)
+    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)), ssl_context='adhoc')
+    # app.run(debug=True)
