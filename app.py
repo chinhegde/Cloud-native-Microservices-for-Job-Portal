@@ -142,6 +142,7 @@ def user_registeration():
     education = request.form.get('education')
     experience = request.form.get('experience')
     skills = request.form.get('skills')
+    recruiter = request.form.get('recruiter')
 
     db_response = userTable.put_item(
         Item={
@@ -157,7 +158,8 @@ def user_registeration():
             'state': str(state),
             'education': str(education),
             'experience': str(experience),
-            'skills': str(skills)
+            'skills': str(skills),
+            'recruiter': bool(recruiter)
         })
 
     return redirect('/search')
