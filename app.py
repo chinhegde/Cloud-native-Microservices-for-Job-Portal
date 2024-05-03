@@ -3,6 +3,7 @@ import json
 import requests
 import os
 import boto3
+from boto3.dynamodb.conditions import Key
 import jwt
 import sys
 
@@ -11,7 +12,7 @@ cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 userTable = dynamodb.Table('users')
 
-jobsTable = dynamodb.Table('jobs')
+jobsTable = dynamodb.Table('job_postings')
 response = jobsTable.scan()
 jobs_data = response['Items']
 
@@ -32,19 +33,28 @@ def search():
 
     filtered_jobs = []
 
-    if location != "Location":
-        if keyword:
-            for job in jobs_data:
-                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+    if request.method == 'GET': 
+        filtered_jobs = jobs_data
+    else:
+        if location != "Location":
+            print("DEBUG ONE")
+            if keyword:
+                for job in jobs_data:
+                    if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+                        if job['job_location'] == location:
+                            filtered_jobs.append(job)
+            else:
+                for job in jobs_data:
                     if job['job_location'] == location:
                         filtered_jobs.append(job)
-    elif keyword and location == "Location":
-        if keyword:
-            for job in jobs_data:
-                if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
-                    filtered_jobs.append(job)
-    else:
-        filtered_jobs = jobs_data  
+        elif keyword and location == "Location":
+            if keyword:
+                for job in jobs_data:
+                    if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
+                        filtered_jobs.append(job)
+
+        else:
+            filtered_jobs = jobs_data
 
     return render_template('job-list.html', jobs=filtered_jobs, locs = locs)
 
@@ -133,7 +143,6 @@ def user_registeration():
     full_name = request.form.get('full_name')
     email = request.form.get('email')
     phone = request.form.get('phone')
-    jobswift_id = request.form.get('jobswift_id')
     birth_date = request.form.get('dob')
     address_line_1 = request.form.get('address_line_1')
     address_line_2 = request.form.get('address_line_2')
@@ -152,7 +161,6 @@ def user_registeration():
             'full_name': str(full_name),
             'email': str(email),
             'phone': str(phone),
-            'jobswift_id': str(jobswift_id),
             'birth_date': str(birth_date),
             'address_line_1': str(address_line_1),
             'address_line_2': str(address_line_2),
@@ -166,12 +174,15 @@ def user_registeration():
             'website': str(website),
             'github_link': str(github_link)
         })
-
+    print(db_response)
     return redirect('/search')
 
 @app.route('/jobs/<job_id>') 
 def job_details(job_id):
-    job = next((job for job in jobs_data if job['job_id'] == job_id), None)
+    response = jobsTable.query(
+        KeyConditionExpression=Key('job_id').eq(job_id)
+    )
+    job = response.get('Items', [None])[0]
     if job:
         return render_template('job-details.html', job=job)
     else:
@@ -194,17 +205,15 @@ def submit_application(job_id):
     full_name = request.form.get('full_name')
     email = request.form.get('email')
     phone = request.form.get('phone')
-    jobswift_id = request.form.get('jobswift_id')
 
     application = {
         'job_id': job_id,
         'full_name': full_name,
         'email': email,
         'phone': phone,
-        'jobswift_id': jobswift_id
     }
 
-    applicationsTable.put_item(application)
+    applicationsTable.put_item(Item = application)
 
     return render_template('thankyou.html')
 
@@ -220,10 +229,10 @@ def create_job():
     company_url = request.form['company_url']
     job_posted_on = request.form['job_posted_on']
     
-    job_id = len(jobs_data['jobs']) + 1
+    job_id = len(jobs_data) + 1
     
     new_job = {
-        "job_id": job_id,
+        "job_id": str(job_id),
         "job_title": job_title,
         "job_description": job_description,
         "min_salary": min_salary,
