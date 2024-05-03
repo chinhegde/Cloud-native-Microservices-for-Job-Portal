@@ -190,7 +190,10 @@ def job_details(job_id):
     
 @app.route('/apply/<job_id>') 
 def apply(job_id):
-    job = next((job for job in jobs_data if job['job_id'] == job_id), None)
+    response = jobsTable.query(
+        KeyConditionExpression=Key('job_id').eq(job_id)
+    )
+    job = response.get('Items', [None])[0]
     if job:
         return render_template('apply.html', job=job)
     else:
