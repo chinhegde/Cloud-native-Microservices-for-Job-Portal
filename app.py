@@ -11,10 +11,12 @@ cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 userTable = dynamodb.Table('users')
 
-#with open('/application/jobs.json', 'r') as jobs_file:
-with open('jobs.json', 'r') as jobs_file:
-    jobs_data = json.load(jobs_file)
-    print(jobs_data.keys())
+jobsTable = dynamodb.Table('jobs')
+response = jobsTable.scan()
+jobs_data = response['Items']
+
+applicationsTable = dynamodb.Table('applications')
+
 
 @app.route('/')
 def login():  
@@ -22,9 +24,7 @@ def login():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    locs = set()
-    for i in jobs_data['jobs']:
-        locs.add(i['job_location'])
+    locs = set([item['job_location'] for item in jobs_data])
 
     keyword = request.form.get('keyword') if request.method == 'POST' else request.args.get('keyword')
     location = request.form.get('location') if request.method == 'POST' else request.args.get('location')
@@ -34,17 +34,17 @@ def search():
 
     if location != "Location":
         if keyword:
-            for job in jobs_data['jobs']:
+            for job in jobs_data:
                 if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
                     if job['job_location'] == location:
                         filtered_jobs.append(job)
     elif keyword and location == "Location":
         if keyword:
-            for job in jobs_data['jobs']:
+            for job in jobs_data:
                 if keyword.lower() in job['job_title'].lower() or keyword.lower() in job['job_description'].lower():
                     filtered_jobs.append(job)
     else:
-        filtered_jobs = jobs_data['jobs']  
+        filtered_jobs = jobs_data  
 
     return render_template('job-list.html', jobs=filtered_jobs, locs = locs)
 
@@ -169,17 +169,17 @@ def user_registeration():
 
     return redirect('/search')
 
-@app.route('/jobs/<int:job_id>') 
+@app.route('/jobs/<job_id>') 
 def job_details(job_id):
-    job = next((job for job in jobs_data['jobs'] if job['job_id'] == job_id), None)
+    job = next((job for job in jobs_data if job['job_id'] == job_id), None)
     if job:
         return render_template('job-details.html', job=job)
     else:
         return "Job not found", 404
     
-@app.route('/apply/<int:job_id>') 
+@app.route('/apply/<job_id>') 
 def apply(job_id):
-    job = next((job for job in jobs_data['jobs'] if job['job_id'] == job_id), None)
+    job = next((job for job in jobs_data if job['job_id'] == job_id), None)
     if job:
         return render_template('apply.html', job=job)
     else:
@@ -189,7 +189,7 @@ def apply(job_id):
 def post_job():
     return render_template('post-job.html')
     
-@app.route('/submitapp/<int:job_id>', methods=['POST'])
+@app.route('/submitapp/<job_id>', methods=['POST'])
 def submit_application(job_id):
     full_name = request.form.get('full_name')
     email = request.form.get('email')
@@ -204,23 +204,12 @@ def submit_application(job_id):
         'jobswift_id': jobswift_id
     }
 
-    if os.path.exists('/application/applications.json'):
-        with open('/application/applications.json', 'r+') as file:
-            data = json.load(file)
-            data['applications'].append(application)
-            file.seek(0)
-            json.dump(data, file, indent=4)
-    else:
-        with open('/application/applications.json', 'w') as file:
-            data = {'applications': [application]}
-            json.dump(data, file, indent=4)
+    applicationsTable.put_item(application)
 
     return render_template('thankyou.html')
 
 @app.route('/createjob', methods=['POST'])
 def create_job():
-    with open('/application/jobs.json', 'r') as f:
-        jobs_data = json.load(f)
     
     job_title = request.form['job_title']
     job_description = request.form['job_description']
@@ -246,10 +235,7 @@ def create_job():
         "job_posted_on": job_posted_on
     }
     
-    jobs_data['jobs'].append(new_job)
-    
-    with open('/application/jobs.json', 'w') as f:
-        json.dump(jobs_data, f, indent=2)
+    jobsTable.put_item(Item=new_job)
     
     return render_template('posted.html', job_id = str(job_id))
 
