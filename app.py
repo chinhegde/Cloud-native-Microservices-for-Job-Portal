@@ -17,9 +17,10 @@ jobs_data = response['Items']
 
 applicationsTable = dynamodb.Table('applications')
 
+
 @app.route('/')
 def login():  
-    return render_template('index.html') #, public_ip=publicIP)
+    return render_template('index.html', public_ip=publicIP)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -142,6 +143,9 @@ def user_registeration():
     education = request.form.get('education')
     experience = request.form.get('experience')
     skills = request.form.get('skills')
+    recruiter = request.form.get('recruiter')
+    website = request.form.get('website')
+    github_link = request.form.get('github_link')
 
     db_response = userTable.put_item(
         Item={
@@ -157,7 +161,10 @@ def user_registeration():
             'state': str(state),
             'education': str(education),
             'experience': str(experience),
-            'skills': str(skills)
+            'skills': str(skills),
+            'recruiter': bool(recruiter),
+            'website': str(website),
+            'github_link': str(github_link)
         })
 
     return redirect('/search')
