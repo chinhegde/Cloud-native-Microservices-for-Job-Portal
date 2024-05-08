@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import json
 import requests
 import os
 import boto3
 from boto3.dynamodb.conditions import Key
 import jwt
-import sys
 from constants import MOCK_RESPONSE
 
 app = Flask(__name__)
