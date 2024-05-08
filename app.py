@@ -21,7 +21,7 @@ applicationsTable = dynamodb.Table('applications')
 
 @app.route('/')
 def login():  
-    return render_template('index.html', public_ip=publicIP)
+    return render_template('index.html')
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -70,7 +70,7 @@ def contact():
 def user_profile():
     authorization_code = request.args.get('code')
     print(authorization_code)
-    redirect_url = 'https://' + publicIP + '/user'
+    redirect_url = 'https://kikkerigo.org/user'
     print(redirect_url)
 
     if authorization_code:
@@ -252,8 +252,5 @@ def create_job():
     return render_template('posted.html', job_id = str(job_id))
 
 if __name__ == '__main__':
-    publicIP = sys.argv[1]
-    publicIP = publicIP.strip()
-    print(publicIP)
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 9001)), ssl_context='adhoc')
     # app.run(debug=True)
