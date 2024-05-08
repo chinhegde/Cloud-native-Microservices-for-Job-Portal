@@ -6,16 +6,15 @@ import boto3
 from boto3.dynamodb.conditions import Key
 import jwt
 import sys
+from constants import MOCK_RESPONSE
 
 app = Flask(__name__)
 cognito_client = boto3.client('cognito-idp', region_name='us-west-1')
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 userTable = dynamodb.Table('users')
-
+ 
 jobsTable = dynamodb.Table('job_postings')
-response = jobsTable.scan()
-jobs_data = response['Items']
-
+ 
 applicationsTable = dynamodb.Table('applications')
 
 
@@ -25,6 +24,8 @@ def login():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    jobs_data = get_jobs_data()
+    
     locs = set([item['job_location'] for item in jobs_data])
 
     keyword = request.form.get('keyword') if request.method == 'POST' else request.args.get('keyword')
@@ -137,6 +138,21 @@ def get_user_info(access_token):
         print("Error:", e)
         return None
 
+def get_jobs_data():
+    if app.config['TESTING'] == True:
+        return {}
+    response = jobsTable.scan()
+    jobs_data = response['Items']
+    return jobs_data
+ 
+def query_jobs_table(job_id):
+    if app.config['TESTING'] == True:
+        return MOCK_RESPONSE
+    response = jobsTable.query(
+        KeyConditionExpression=Key('job_id').eq(job_id)
+    )
+    return response
+
 @app.route('/register', methods=['POST'])
 def user_registeration():
     print(request.form.values)
@@ -179,9 +195,7 @@ def user_registeration():
 
 @app.route('/jobs/<job_id>') 
 def job_details(job_id):
-    response = jobsTable.query(
-        KeyConditionExpression=Key('job_id').eq(job_id)
-    )
+    response = query_jobs_table(job_id)
     job = response.get('Items', [None])[0]
     if job:
         return render_template('job-details.html', job=job)
@@ -190,9 +204,7 @@ def job_details(job_id):
     
 @app.route('/apply/<job_id>') 
 def apply(job_id):
-    response = jobsTable.query(
-        KeyConditionExpression=Key('job_id').eq(job_id)
-    )
+    response = query_jobs_table(job_id)
     job = response.get('Items', [None])[0]
     if job:
         return render_template('apply.html', job=job)

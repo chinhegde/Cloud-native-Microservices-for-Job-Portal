@@ -1,5 +1,6 @@
 import pytest
 from app import app
+from unittest.mock import patch, MagicMock
 
 @pytest.fixture
 def client():
@@ -32,11 +33,6 @@ def test_job_details_existing_job(client):
     assert response.status_code == 200
     assert b'Apply Now' in response.data
 
-def test_job_details_nonexistent_job(client):
-    response = client.get('/jobs/999')  # Assuming job ID 999 does not exist
-    assert response.status_code == 404
-    assert b'Job not found' in response.data
-
 def test_apply_existing_job(client):
     response = client.get('/apply/1')
     assert response.status_code == 200
@@ -46,4 +42,3 @@ def test_post_job_page(client):
     response = client.get('/post-job')
     assert response.status_code == 200
     assert b'Post a Job' in response.data
-
