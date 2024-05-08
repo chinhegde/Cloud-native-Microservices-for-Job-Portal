@@ -9,4 +9,4 @@ RUN pip3 install boto3
 RUN pip3 install jwt
 RUN pip3 install requests
 
-CMD ["sh", "/application/findPublicIP.sh"]
+CMD ["python3", "/application/app.py"]
