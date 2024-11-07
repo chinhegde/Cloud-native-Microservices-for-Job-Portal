@@ -1,0 +1,108 @@
+gowrima@Gowrimas-MacBook-Pro ~ % ab -k -c 3 -n 200 https://kikkerigo.org/ 
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking kikkerigo.org (be patient)
+Completed 100 requests
+Completed 200 requests
+Finished 200 requests
+
+
+Server Software:        Werkzeug/3.0.3
+Server Hostname:        kikkerigo.org
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+Server Temp Key:        ECDH X25519 253 bits
+TLS Server Name:        kikkerigo.org
+
+Document Path:          /
+Document Length:        3050 bytes
+
+Concurrency Level:      3
+Time taken for tests:   1.965 seconds
+Complete requests:      200
+Failed requests:        0
+Keep-Alive requests:    200
+Total transferred:      646000 bytes
+HTML transferred:       610000 bytes
+Requests per second:    101.80 [#/sec] (mean)
+Time per request:       29.470 [ms] (mean)
+Time per request:       9.823 [ms] (mean, across all concurrent requests)
+Transfer rate:          321.10 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1  10.5      0     111
+Processing:    16   27   6.2     26      62
+Waiting:       16   26   5.9     25      60
+Total:         16   28  12.1     26     136
+
+Percentage of the requests served within a certain time (ms)
+  50%     26
+  66%     28
+  75%     30
+  80%     31
+  90%     35
+  95%     41
+  98%     62
+  99%    102
+ 100%    136 (longest request)
+gowrima@Gowrimas-MacBook-Pro ~ % ab -k -c 30 -n 2000 https://kikkerigo.org/
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking kikkerigo.org (be patient)
+Completed 200 requests
+Completed 400 requests
+Completed 600 requests
+Completed 800 requests
+Completed 1000 requests
+Completed 1200 requests
+Completed 1400 requests
+Completed 1600 requests
+Completed 1800 requests
+Completed 2000 requests
+Finished 2000 requests
+
+
+Server Software:        Werkzeug/3.0.3
+Server Hostname:        kikkerigo.org
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+Server Temp Key:        ECDH X25519 253 bits
+TLS Server Name:        kikkerigo.org
+
+Document Path:          /
+Document Length:        3050 bytes
+
+Concurrency Level:      30
+Time taken for tests:   4.164 seconds
+Complete requests:      2000
+Failed requests:        0
+Keep-Alive requests:    2000
+Total transferred:      6460000 bytes
+HTML transferred:       6100000 bytes
+Requests per second:    480.30 [#/sec] (mean)
+Time per request:       62.461 [ms] (mean)
+Time per request:       2.082 [ms] (mean, across all concurrent requests)
+Transfer rate:          1515.02 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    2  18.8      0     193
+Processing:    28   58  13.9     59     128
+Waiting:       26   57  13.9     57     114
+Total:         28   61  24.3     59     273
+
+Percentage of the requests served within a certain time (ms)
+  50%     59
+  66%     65
+  75%     69
+  80%     71
+  90%     78
+  95%     84
+  98%     93
+  99%    209
+ 100%    273 (longest request)

@@ -1,0 +1,93 @@
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking kikkerigo.org (be patient)
+
+
+Server Software:        Werkzeug/3.0.3
+Server Hostname:        kikkerigo.org
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+Server Temp Key:        ECDH X25519 253 bits
+TLS Server Name:        kikkerigo.org
+
+Document Path:          /
+Document Length:        3049 bytes
+
+Concurrency Level:      3
+Time taken for tests:   2.056 seconds
+Complete requests:      200
+Failed requests:        0
+Keep-Alive requests:    200
+Total transferred:      645800 bytes
+HTML transferred:       609800 bytes
+Requests per second:    97.28 [#/sec] (mean)
+Time per request:       30.839 [ms] (mean)
+Time per request:       10.280 [ms] (mean, across all concurrent requests)
+Transfer rate:          306.75 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   9.7      0      96
+Processing:    17   28   5.6     28      45
+Waiting:       15   27   5.5     26      44
+Total:         17   30  11.0     28     122
+
+Percentage of the requests served within a certain time (ms)
+  50%     28
+  66%     31
+  75%     33
+  80%     34
+  90%     36
+  95%     39
+  98%     45
+  99%    101
+ 100%    122 (longest request)
+
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking kikkerigo.org (be patient)
+
+
+Server Software:        Werkzeug/3.0.3
+Server Hostname:        kikkerigo.org
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+Server Temp Key:        ECDH X25519 253 bits
+TLS Server Name:        kikkerigo.org
+
+Document Path:          /
+Document Length:        3049 bytes
+
+Concurrency Level:      30
+Time taken for tests:   3.275 seconds
+Complete requests:      2000
+Failed requests:        0
+Keep-Alive requests:    2000
+Total transferred:      6458000 bytes
+HTML transferred:       6098000 bytes
+Requests per second:    610.69 [#/sec] (mean)
+Time per request:       49.125 [ms] (mean)
+Time per request:       1.637 [ms] (mean, across all concurrent requests)
+Transfer rate:          1925.70 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    2  18.9      0     180
+Processing:    27   45   8.4     43      90
+Waiting:       24   43   8.3     42      86
+Total:         27   47  20.9     44     232
+
+Percentage of the requests served within a certain time (ms)
+  50%     44
+  66%     47
+  75%     49
+  80%     50
+  90%     56
+  95%     62
+  98%     79
+  99%    202
+ 100%    232 (longest request)
